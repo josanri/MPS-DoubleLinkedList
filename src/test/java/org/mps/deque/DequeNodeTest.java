@@ -4,8 +4,17 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The class contains methods for testing double linked node in three different cases:
+ * One node
+ * Two node
+ * On every kind of node it is tested the previous and next as well as boolean methods
+ * that check so such as isTerminal and isNotTerminal.
+ * @author Alba Ruiz Gutiérrez
+ * @author José Manuel Sánchez Rico
+ */
 class DequeNodeTest {
-    @DisplayName("A single node")
+    @DisplayName("On a single node")
     @Nested
     class SingleNodeTest {
         static DequeNode<Integer> singleNode;
@@ -16,19 +25,19 @@ class DequeNodeTest {
         }
 
         @Test
-        @DisplayName("is last")
+        @DisplayName("the second node is last")
         void emptyNodeIsLast () {
             assertTrue(singleNode.isLastNode());
         }
 
         @Test
-        @DisplayName("is first")
+        @DisplayName("the initial node is first")
         void emptyNodeIsFirst () {
             assertTrue(singleNode.isFirstNode());
         }
     }
 
-    @DisplayName("Two nodes linked")
+    @DisplayName("On two nodes linked")
     @Nested
     class TwoNodesTest {
         static DequeNode<Integer> firstNode;

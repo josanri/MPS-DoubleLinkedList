@@ -1,5 +1,9 @@
 package org.mps.deque;
 
+/**
+ * The interface defines double ended queue methods
+ * @author Antonio Jesús Nebro Urbaneja
+ */
 public interface DoubleEndedQueue<T> {
 
     // Basic operations
@@ -16,6 +20,4 @@ public interface DoubleEndedQueue<T> {
     int size();
 
     // Complex operations
-    // (Estas operaciones se incluirán más adelante para ser realizadas en la segunda
-    // sesión de laboratorio de esta práctica.)
 }

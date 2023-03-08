@@ -1,5 +1,9 @@
 package org.mps.deque;
 
+/**
+ * The class contains methods a double linked node
+ * @author Antonio Jesús Nebro Urbaneja
+ */
 class DequeNode<T> {
 
     private T item;

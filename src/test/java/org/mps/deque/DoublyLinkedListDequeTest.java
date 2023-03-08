@@ -7,10 +7,20 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The class contains methods for testing linked list in three different cases:
+ * Empty list
+ * One node list
+ * Two node list
+ * On every kind of list it is tested the size, insertions and deletions
+ * checking if the consistency is kept between nodes.
+ * @author Alba Ruiz Gutiérrez
+ * @author José Manuel Sánchez Rico
+ */
 class DoublyLinkedListDequeTest {
 
     @Nested
-    @DisplayName("An empty double linked list")
+    @DisplayName("On an empty double linked list")
     class EmptyDoubleLinkedList {
         static DoublyLinkedListDeque<Integer> emptyDoubleLinkedList;
         @BeforeAll
@@ -18,11 +28,32 @@ class DoublyLinkedListDequeTest {
             emptyDoubleLinkedList = new DoublyLinkedListDeque<>();
         }
 
-        @DisplayName("has size zero")
+        @DisplayName("the size is zero")
         @Test
         void hasSizeZero() {
-            assertEquals(0, emptyDoubleLinkedList.size());
+            int expectedValue = 0;
+            int actualValue = emptyDoubleLinkedList.size();
+            assertEquals(expectedValue, actualValue);
+        }
+    }
+
+    @Nested
+    @DisplayName("On a single node, double linked list")
+    class SingleNodeDoubleLinkedList {
+        static DoublyLinkedListDeque<Integer> singleNodeDoubleLinkedList;
+        @BeforeAll
+        static void setUp() {
+            singleNodeDoubleLinkedList = new DoublyLinkedListDeque<>();
+            singleNodeDoubleLinkedList.append(5);
         }
 
+        @DisplayName("the size is one")
+        @Test
+        void hasSizeZero() {
+            int expectedValue = 1;
+            int actualValue = singleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
+        }
     }
 }
