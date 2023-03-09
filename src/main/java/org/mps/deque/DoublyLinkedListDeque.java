@@ -35,14 +35,13 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     @Override
     public void deleteFirst() {
         if (first == null)
-            throw new RuntimeException("Empty deque");
+            throw new DoubleEndedQueueException("Empty deque");
         if (first.isLastNode()) {
             first = null;
             last = null;
         } else {
-            DequeNode<T> secondNode = first.getNext();
-            secondNode.setPrevious(null);
-            first = secondNode;
+            first = first.getNext();
+            first.setPrevious(null);
         }
         size--;
     }
@@ -55,9 +54,8 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
             first = null;
             last = null;
         } else {
-            DequeNode<T> penultimateNode = last.getPrevious();
-            penultimateNode.setPrevious(null);
-            last = penultimateNode;
+            last = last.getPrevious();
+            last.setNext(null);
         }
         size--;
     }
@@ -65,17 +63,15 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     @Override
     public T first() {
         if (first == null)
-            return null;
-        else
-            return first.getItem();
+            throw new DoubleEndedQueueException("No items left");
+        return first.getItem();
     }
 
     @Override
     public T last() {
         if (last == null)
-            return null;
-        else
-            return last.getItem();
+            throw new DoubleEndedQueueException("No items left");
+        return last.getItem();
     }
 
     @Override
