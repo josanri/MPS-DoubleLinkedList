@@ -49,7 +49,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     @Override
     public void deleteLast() {
         if (last == null)
-            throw new RuntimeException("Empty deque");
+            throw new DoubleEndedQueueException("Empty deque");
         if (last.isFirstNode()) {
             first = null;
             last = null;
