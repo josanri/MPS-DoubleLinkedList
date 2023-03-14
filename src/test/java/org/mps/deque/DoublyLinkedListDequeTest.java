@@ -115,7 +115,7 @@ class DoublyLinkedListDequeTest {
 
         @Test
         @DisplayName("deleting the first element should result in an empty deque")
-        void deleteFirstFromSingleNode(){
+        void deleteFirstFromSingleNodeThrowsAnException(){
             singleNodeDoubleLinkedList.deleteFirst();
             assertEquals(0, singleNodeDoubleLinkedList.size());
             assertThrows(DoubleEndedQueueException.class, singleNodeDoubleLinkedList::first);
@@ -124,7 +124,7 @@ class DoublyLinkedListDequeTest {
 
         @Test
         @DisplayName("deleting the first element should result in an empty deque")
-        void deleteLastFromSingleNode(){
+        void deleteLastFromSingleNodeResultsInAnEmptyList(){
             singleNodeDoubleLinkedList.deleteLast();
             assertEquals(0, singleNodeDoubleLinkedList.size());
             assertThrows(DoubleEndedQueueException.class, singleNodeDoubleLinkedList::last);
@@ -159,7 +159,7 @@ class DoublyLinkedListDequeTest {
 
         @DisplayName("adding an element to the front should increase size by one and change first element")
         @Test
-        void addFirst() {
+        void addFirstIncreaseSizeByOne() {
             doubleNodeDoubleLinkedList.prepend(1);
             assertEquals(3, doubleNodeDoubleLinkedList.size());
             assertEquals(1, doubleNodeDoubleLinkedList.first());
@@ -168,7 +168,7 @@ class DoublyLinkedListDequeTest {
 
         @DisplayName("adding an element to the back should increase size and change last element")
         @Test
-        void addLast() {
+        void addLastIncreaseSizeByOne() {
             doubleNodeDoubleLinkedList.append(1);
             assertEquals(3, doubleNodeDoubleLinkedList.size());
             assertEquals(1, doubleNodeDoubleLinkedList.last());
@@ -176,7 +176,7 @@ class DoublyLinkedListDequeTest {
 
         @Test
         @DisplayName("deleting the first element should result in a single deque")
-        void deleteFirstFromDoubleNode() {
+        void deleteFirstFromDoubleNodeResultsInASingleNodeList() {
             doubleNodeDoubleLinkedList.deleteFirst();
             assertEquals(1, doubleNodeDoubleLinkedList.size());
             assertEquals(6, doubleNodeDoubleLinkedList.first());
@@ -187,7 +187,7 @@ class DoublyLinkedListDequeTest {
 
         @Test
         @DisplayName("deleting the last element should result in a single deque")
-        void deleteLastFromDoubleNode() {
+        void deleteLastFromDoubleNodeResultsInASingleNodeList() {
             doubleNodeDoubleLinkedList.deleteLast();
             assertEquals(1, doubleNodeDoubleLinkedList.size());
             assertEquals(5, doubleNodeDoubleLinkedList.first());
