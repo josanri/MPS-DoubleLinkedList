@@ -20,7 +20,7 @@ class DoublyLinkedListDequeTest {
 
     @Nested
     @DisplayName("On an empty double linked list")
-    class EmptyDoubleLinkedList {
+    class EmptyDoubleLinkedListTest {
         static DoublyLinkedListDeque<Integer> emptyDoubleLinkedList;
         @BeforeEach
         void setUp() {
@@ -65,12 +65,19 @@ class DoublyLinkedListDequeTest {
             assertThrows(DoubleEndedQueueException.class, () -> emptyDoubleLinkedList.last());
         }
 
+        @DisplayName("getting any element should throw an exception")
+        @Test
+        void getOnEmptyDeque(){
+            assertThrows(IndexOutOfBoundsException.class, () -> emptyDoubleLinkedList.get(1));
+        }
+
+
 
     }
 
     @Nested
     @DisplayName("On a single node, double linked list")
-    class SingleNodeDoubleLinkedList {
+    class SingleNodeDoubleLinkedListTest {
         static DoublyLinkedListDeque<Integer> singleNodeDoubleLinkedList;
         @BeforeEach
         void setUp() {
@@ -88,8 +95,8 @@ class DoublyLinkedListDequeTest {
             assertEquals(expectedValue, actualValue);
         }
 
-        @Test
         @DisplayName("the first and last element should be the same")
+        @Test
         void singleElement() {
 
             assertEquals(1, singleNodeDoubleLinkedList.size());
@@ -115,8 +122,9 @@ class DoublyLinkedListDequeTest {
             assertEquals(1, singleNodeDoubleLinkedList.last());
         }
 
-        @Test
+
         @DisplayName("deleting the first element should result in an empty deque")
+        @Test
         void deleteFirstFromSingleNodeThrowsAnException(){
             singleNodeDoubleLinkedList.deleteFirst();
             assertEquals(0, singleNodeDoubleLinkedList.size());
@@ -124,8 +132,9 @@ class DoublyLinkedListDequeTest {
 
         }
 
-        @Test
+
         @DisplayName("deleting the first element should result in an empty deque")
+        @Test
         void deleteLastFromSingleNodeResultsInAnEmptyList(){
             singleNodeDoubleLinkedList.deleteLast();
             assertEquals(0, singleNodeDoubleLinkedList.size());
@@ -133,12 +142,35 @@ class DoublyLinkedListDequeTest {
 
         }
 
+        @DisplayName("try to get an element with index less than zero should throw an exception")
+        @Test
+        void getValueWithNegativeIndexOnSingleDeque(){
+            assertThrows(IndexOutOfBoundsException.class, () -> singleNodeDoubleLinkedList.get(-1));
+        }
+
+        @DisplayName("try to get an element with index equals to size should throw an exception")
+        @Test
+        void getValueWithIndexEqualsToSizeOnSingleDeque(){
+            assertThrows(IndexOutOfBoundsException.class, () -> singleNodeDoubleLinkedList.get(1));
+        }
+
+        @DisplayName("try to get an element with index bigger than size should throw an exception")
+        @Test
+        void getValueWithIndexOutOfSizeOnSingleDeque(){
+            assertThrows(IndexOutOfBoundsException.class, () -> singleNodeDoubleLinkedList.get(2));
+        }
+
+        @DisplayName("try to get an element with a valid index should return the element")
+        @Test
+        void getValueWithValidIndexOnSingleDeque(){
+            assertEquals(5,singleNodeDoubleLinkedList.get(0));
+        }
 
     }
 
     @Nested
     @DisplayName("On a two nodes, double linked list")
-    class DoubleNodeDoubleLinkedList {
+    class DoubleNodeDoubleLinkedListTest {
         static DoublyLinkedListDeque<Integer> doubleNodeDoubleLinkedList;
 
         @BeforeEach
@@ -204,6 +236,31 @@ class DoublyLinkedListDequeTest {
             assertEquals(0, doubleNodeDoubleLinkedList.size());
             assertThrows(DoubleEndedQueueException.class, doubleNodeDoubleLinkedList::first);
             assertThrows(DoubleEndedQueueException.class, doubleNodeDoubleLinkedList::last);
+        }
+
+        @DisplayName("try to get an element with index less than zero should throw an exception")
+        @Test
+        void getValueWithNegativeIndexOnDoubleDeque(){
+            assertThrows(IndexOutOfBoundsException.class, () -> doubleNodeDoubleLinkedList.get(-1));
+        }
+
+        @DisplayName("try to get an element with index equals to size should throw an exception")
+        @Test
+        void getValueWithSizeEqualsToIndexOnDoubleDeque(){
+            assertThrows(IndexOutOfBoundsException.class, () -> doubleNodeDoubleLinkedList.get(2));
+        }
+
+        @DisplayName("try to get an element with index bigger than size should throw an exception")
+        @Test
+        void getValueWithIndexOutOfSizeOnDoubleDeque(){
+            assertThrows(IndexOutOfBoundsException.class, () -> doubleNodeDoubleLinkedList.get(3));
+        }
+
+        @DisplayName("try to get an element with a valid index should return the element")
+        @Test
+        void getValueWithValidIndexOnSingleDeque(){
+            assertEquals(5,doubleNodeDoubleLinkedList.get(0));
+            assertEquals(6,doubleNodeDoubleLinkedList.get(1));
         }
 
     }
