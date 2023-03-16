@@ -123,9 +123,6 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     }
 
     public void sort(Comparator<? super T> comparator){
-        if (size == 0) {
-            throw new DoubleEndedQueueException("Empty list");
-        }
         while (!isSorted(comparator)) {
             DequeNode<T> iteratorNode = first;
             while (iteratorNode != null && iteratorNode.getNext() != null) {
