@@ -104,10 +104,15 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     }
 
     public void remove(T value) {
+        if(size == 0){
+            throw new DoubleEndedQueueException("Can't remove from an empty deque");
+        }
         DequeNode<T> iteratorNode = first;
         boolean found = false;
-        while (iteratorNode != null && !found) {
+        while (iteratorNode != null) {
             found = Objects.equals(iteratorNode.getItem(), value);
+            if (found)
+                break;
             iteratorNode = iteratorNode.getNext();
         }
         if (found) {
@@ -119,6 +124,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
                 first = iteratorNode.getNext();
             if (iteratorNode == last)
                 last = iteratorNode.getPrevious();
+            size--;
         }
     }
 
