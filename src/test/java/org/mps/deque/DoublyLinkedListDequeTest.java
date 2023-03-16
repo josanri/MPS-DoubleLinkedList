@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The class contains methods for testing linked list in three different cases:
  * Empty list
+ * - has size zero
+ * - adding one means size 1
  * One node list
  * Two node list
  * On every kind of list it is tested the size, insertions and deletions

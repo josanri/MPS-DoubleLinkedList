@@ -83,7 +83,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     public T get(int index) {
         if (size <= index || index < 0) {
-            throw new DoubleEndedQueueException("Out of bound index");
+            throw new IndexOutOfBoundsException();
         }
         DequeNode<T> iteratorNode = first;
         for (int i = 0; i < index; i++) {
@@ -141,7 +141,12 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     }
 
     private boolean isSortedNodes(DequeNode<T> iteratorNode, DequeNode<T> next, Comparator<? super T> comparator) {
-        return  (comparator.compare(iteratorNode.getPrevious().getItem(),
+        if (iteratorNode.getItem() == null)
+            return (true);
+        else if (next.getItem() == null)
+            return (false);
+        else
+            return (comparator.compare(iteratorNode.getPrevious().getItem(),
                 iteratorNode.getItem()) <= 0);
 
     }
