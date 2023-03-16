@@ -8,9 +8,22 @@ import static org.junit.jupiter.api.Assertions.*;
  * The class contains methods for testing linked list in three different cases:
  * Empty list
  * - has size zero
- * - adding one means size 1
+ * - adding one at the beginning means size 1 and node is first
+ * - adding one at the end means size 1 and node is last
+ * - deleting throws exception
+ * - getting first or last item throws exception
  * One node list
+ * - has size zero
+ * - first and last element is the same as size is equals to 1
+ * - can delete once, but not twice
+ * - prepend an element increments the size by one and puts it as first
+ * - append an element increments the size by one and puts it as last
  * Two node list
+ * - has size two
+ * - can delete twice, but no more
+ * - can delete once and keep consistency
+ * - prepend an element increments the size by one and puts it as first
+ * - append an element increments the size by one and puts it as last
  * On every kind of list it is tested the size, insertions and deletions
  * checking if the consistency is kept between nodes.
  * @author Alba Ruiz Gutiérrez
@@ -72,7 +85,17 @@ class DoublyLinkedListDequeTest {
         }
 
 
+        @DisplayName("asking if it contains a value returns false")
+        @Test
+        void containsReturnsNull() {
+            assertFalse(emptyDoubleLinkedList.contains(5));
+        }
 
+        @DisplayName("asking if it contains a null returns false")
+        @Test
+        void containsNullReturnsNull() {
+            assertFalse(emptyDoubleLinkedList.contains(null));
+        }
     }
 
     @Nested
@@ -122,7 +145,6 @@ class DoublyLinkedListDequeTest {
             assertEquals(1, singleNodeDoubleLinkedList.last());
         }
 
-
         @DisplayName("deleting the first element should result in an empty deque")
         @Test
         void deleteFirstFromSingleNodeThrowsAnException(){
@@ -132,14 +154,18 @@ class DoublyLinkedListDequeTest {
 
         }
 
-
         @DisplayName("deleting the first element should result in an empty deque")
         @Test
         void deleteLastFromSingleNodeResultsInAnEmptyList(){
             singleNodeDoubleLinkedList.deleteLast();
             assertEquals(0, singleNodeDoubleLinkedList.size());
             assertThrows(DoubleEndedQueueException.class, singleNodeDoubleLinkedList::last);
+        }
 
+        @DisplayName("asking if it contains a value that is contained returns true")
+        @Test
+        void containsReturnsTrueWhenAskingIfItContainsAValueThatTheListHas() {
+            assertTrue(singleNodeDoubleLinkedList.contains(5));
         }
 
         @DisplayName("try to get an element with index less than zero should throw an exception")
@@ -165,7 +191,17 @@ class DoublyLinkedListDequeTest {
         void getValueWithValidIndexOnSingleDeque(){
             assertEquals(5,singleNodeDoubleLinkedList.get(0));
         }
+        @DisplayName("asking if it contains a value that is contained returns true")
+        @Test
+        void containsReturnsTrueWhenAskingIfItContainsAValueThatTheListDoesNotHave() {
+            assertFalse(singleNodeDoubleLinkedList.contains(1));
+        }
 
+        @DisplayName("asking if it contains a null returns false")
+        @Test
+        void containsNullReturnsNull() {
+            assertFalse(singleNodeDoubleLinkedList.contains(null));
+        }
     }
 
     @Nested
@@ -263,5 +299,53 @@ class DoublyLinkedListDequeTest {
             assertEquals(6,doubleNodeDoubleLinkedList.get(1));
         }
 
+        @DisplayName("asking if it contains a value that is contained returns true")
+        @Test
+        void containsReturnsTrueWhenAskingIfItContainsAValueThatTheListHas() {
+            assertTrue(doubleNodeDoubleLinkedList.contains(5));
+        }
+
+        @DisplayName("asking if it contains a value that is the last returns true")
+        @Test
+        void containsReturnsTrueWhenAskingIfItContainsAValueThatIsTheLastOne() {
+            assertTrue(doubleNodeDoubleLinkedList.contains(6));
+        }
+
+        @DisplayName("asking if it contains a value that is contained returns true")
+        @Test
+        void containsReturnsTrueWhenAskingIfItContainsAValueThatTheListDoesNotHave() {
+            assertFalse(doubleNodeDoubleLinkedList.contains(1));
+        }
+
+        @DisplayName("asking if it contains a null returns false")
+        @Test
+        void containsNullReturnsNull() {
+            assertFalse(doubleNodeDoubleLinkedList.contains(null));
+        }
+    }
+    @Nested
+    @DisplayName("On list with a null item")
+    class NullNodeListTest {
+        static DoubleEndedQueue<Integer> nullItemDoubleLinkedList;
+
+        @BeforeEach
+        void setUp() {
+            nullItemDoubleLinkedList = new DoublyLinkedListDeque<>();
+            nullItemDoubleLinkedList.append(null);
+        }
+
+        @DisplayName("asking if it contains null returns true")
+        @Test
+        void containsReturnsTrueWhenAskingIfItContainsNull() {
+            assertDoesNotThrow(() -> nullItemDoubleLinkedList.contains(null));
+            assertTrue(nullItemDoubleLinkedList.contains(null));
+        }
+
+        @DisplayName("asking if it contains a value different value returns false")
+        @Test
+        void containsReturnsFalseWhenAskingIfItContainsAValueDistinctFromNull() {
+            assertDoesNotThrow(() -> nullItemDoubleLinkedList.contains(5));
+            assertFalse(nullItemDoubleLinkedList.contains(5));
+        }
     }
 }
