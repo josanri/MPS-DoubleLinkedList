@@ -96,6 +96,12 @@ class DoublyLinkedListDequeTest {
         void containsNullReturnsNull() {
             assertFalse(emptyDoubleLinkedList.contains(null));
         }
+
+        @DisplayName("remove should throw an exception")
+        @Test
+        void removeOnEmptyDeque(){
+            assertThrows(DoubleEndedQueueException.class, () -> emptyDoubleLinkedList.remove(1));
+        }
     }
 
     @Nested
@@ -201,6 +207,13 @@ class DoublyLinkedListDequeTest {
         @Test
         void containsNullReturnsNull() {
             assertFalse(singleNodeDoubleLinkedList.contains(null));
+        }
+
+        @DisplayName("remove should result on an empty deque")
+        @Test
+        void removeOnSingleDeque(){
+            singleNodeDoubleLinkedList.remove(5);
+            assertEquals(0,singleNodeDoubleLinkedList.size());
         }
     }
 
