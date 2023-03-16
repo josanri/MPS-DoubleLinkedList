@@ -131,8 +131,9 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public void sort(Comparator<? super T> comparator){
         while (!isSorted(comparator)) {
             DequeNode<T> iteratorNode = first;
-            while (iteratorNode != null && iteratorNode.getNext() != null) {
-                if (!isSortedNodes(iteratorNode, iteratorNode.getNext(), comparator))
+            while (iteratorNode != null) {
+                if (iteratorNode.getNext() != null
+                        && !isSortedNodes(iteratorNode, iteratorNode.getNext(), comparator))
                     swapNodesValues(iteratorNode, iteratorNode.getNext());
                 iteratorNode = iteratorNode.getNext();
 

@@ -121,6 +121,12 @@ class DoublyLinkedListDequeTest {
         void removeOnEmptyDeque(){
             assertThrows(DoubleEndedQueueException.class, () -> emptyDoubleLinkedList.remove(1));
         }
+
+        @DisplayName("sorting does not throw and exception")
+        @Test
+        void sortingDoesNotThrowAnException(){
+            assertDoesNotThrow(() -> emptyDoubleLinkedList.sort(Integer::compareTo));
+        }
     }
 
     @Nested
@@ -129,8 +135,7 @@ class DoublyLinkedListDequeTest {
         static DoublyLinkedListDeque<Integer> singleNodeDoubleLinkedList;
         @BeforeEach
         void setUp() {
-            singleNodeDoubleLinkedList = new DoublyLinkedListDeque<>();
-            singleNodeDoubleLinkedList.append(5);
+            singleNodeDoubleLinkedList = createQueueOf( 5);
         }
 
 
@@ -243,11 +248,8 @@ class DoublyLinkedListDequeTest {
 
         @BeforeEach
         void setUp() {
-            doubleNodeDoubleLinkedList = new DoublyLinkedListDeque<>();
-            doubleNodeDoubleLinkedList.append(5);
-            doubleNodeDoubleLinkedList.append(6);
+            doubleNodeDoubleLinkedList = createQueueOf( 5, 6);
         }
-
 
         @DisplayName("the size is two")
         @Test
@@ -445,6 +447,18 @@ class DoublyLinkedListDequeTest {
             assertEquals(4, list.get(1));
             assertEquals(5, list.last());
             assertEquals(5, list.get(2));
+        }
+
+        @DisplayName("sorting three elements with two nulls sorts them")
+        @Test
+        void sortingTwoNullsAndOneElementsWithNullSortsThem() {
+            DoublyLinkedListDeque<Integer> list = createQueueOf( null, null, 4);
+            list.sort(Integer::compareTo);
+            assertEquals(null, list.first());
+            assertEquals(null, list.get(0));
+            assertEquals(null, list.get(1));
+            assertEquals(4, list.last());
+            assertEquals(4, list.get(2));
         }
     }
 }
