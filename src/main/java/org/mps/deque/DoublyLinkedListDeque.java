@@ -1,6 +1,7 @@
 package org.mps.deque;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * The class contains methods a double linked list
@@ -96,21 +97,17 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
         DequeNode<T> iteratorNode = first;
         boolean found = false;
         while (iteratorNode != null && !found) {
-            found = iteratorNode.getItem().equals(value);
+            found = Objects.equals(iteratorNode.getItem(), value);
             iteratorNode = iteratorNode.getNext();
         }
-        return (false);
+        return (found);
     }
 
-    /**
-     * Removes the first instance of value on the list
-     * @param value
-     */
     public void remove(T value) {
         DequeNode<T> iteratorNode = first;
         boolean found = false;
         while (iteratorNode != null && !found) {
-            found = iteratorNode.getItem().equals(value);
+            found = Objects.equals(iteratorNode.getItem(), value);
             iteratorNode = iteratorNode.getNext();
         }
         if (found) {
