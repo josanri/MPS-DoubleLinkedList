@@ -127,7 +127,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
             DequeNode<T> iteratorNode = first;
             while (iteratorNode != null && iteratorNode.getNext() != null) {
                 if (!isSortedNodes(iteratorNode, iteratorNode.getNext(), comparator))
-                    swapNodesValues(iteratorNode, iteratorNode);
+                    swapNodesValues(iteratorNode, iteratorNode.getNext());
                 iteratorNode = iteratorNode.getNext();
 
             }
@@ -140,8 +140,8 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
         else if (next.getItem() == null)
             return (false);
         else
-            return (comparator.compare(iteratorNode.getPrevious().getItem(),
-                iteratorNode.getItem()) <= 0);
+            return (comparator.compare(iteratorNode.getItem(),
+                next.getItem()) <= 0);
 
     }
 
@@ -156,8 +156,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
             return  true;
         DequeNode<T> iteratorNode = first.getNext();
         while (iteratorNode != null) {
-            if (comparator.compare(iteratorNode.getPrevious().getItem(),
-                    iteratorNode.getItem()) > 0) {
+            if (!isSortedNodes(iteratorNode.getPrevious(), iteratorNode, comparator)) {
                 return (false);
             }
             iteratorNode = iteratorNode.getNext();

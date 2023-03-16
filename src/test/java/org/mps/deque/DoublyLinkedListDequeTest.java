@@ -2,34 +2,53 @@ package org.mps.deque;
 
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The class contains methods for testing linked list in three different cases:
- * Empty list
+ * <h3>Empty list</h3>
  * - has size zero
  * - adding one at the beginning means size 1 and node is first
  * - adding one at the end means size 1 and node is last
  * - deleting throws exception
  * - getting first or last item throws exception
- * One node list
+ * - sorting has no effect and does not throw an exception
+ * <h3>One node list</h3>
  * - has size zero
  * - first and last element is the same as size is equals to 1
  * - can delete once, but not twice
  * - prepend an element increments the size by one and puts it as first
  * - append an element increments the size by one and puts it as last
- * Two node list
+ * - sorting has no effect and does not throw an exception
+ * <h3>Two node list</h3>
  * - has size two
  * - can delete twice, but no more
  * - can delete once and keep consistency
  * - prepend an element increments the size by one and puts it as first
  * - append an element increments the size by one and puts it as last
+ * <h3>Null node item list</h3>
+ * - contains null and does nos throw an exception
+ * - does not contain any other value than null
+ * <h3>Sorted lists</h3>
+ *  - sorting has no effect
+ *  <h3>Unsorted lists</h3>
+ *  - sorting on different kinds of list sorts the list
+ * <br/>
  * On every kind of list it is tested the size, insertions and deletions
  * checking if the consistency is kept between nodes.
  * @author Alba Ruiz Gutiérrez
  * @author José Manuel Sánchez Rico
  */
 class DoublyLinkedListDequeTest {
+    private DoublyLinkedListDeque<Integer> createQueueOf(Integer ...args) {
+        DoublyLinkedListDeque<Integer> list = new DoublyLinkedListDeque<>();
+        for (Integer number : args) {
+            list.append(number);
+        }
+        return list;
+    }
 
     @Nested
     @DisplayName("On an empty double linked list")
@@ -346,6 +365,73 @@ class DoublyLinkedListDequeTest {
         void containsReturnsFalseWhenAskingIfItContainsAValueDistinctFromNull() {
             assertDoesNotThrow(() -> nullItemDoubleLinkedList.contains(5));
             assertFalse(nullItemDoubleLinkedList.contains(5));
+        }
+    }
+
+    @DisplayName("On a sorted node list")
+    @Nested
+    class SortedNodeListTest {
+        @DisplayName("sorting two elements has no effect")
+        @Test
+        void sortingTwoElementsDoesNotModifyTheList() {
+            DoublyLinkedListDeque<Integer> list = createQueueOf(4, 5);
+            list.sort(Integer::compareTo);
+            assertEquals(4, list.first());
+            assertEquals(4, list.get(0));
+            assertEquals(5, list.last());
+            assertEquals(5, list.get(1));
+        }
+
+        @DisplayName("sorting three elements has no effect")
+        @Test
+        void sortingThreeElementsDoesNotModifyTheList() {
+            DoublyLinkedListDeque<Integer> list = createQueueOf(4, 5, 6);
+            list.sort(Integer::compareTo);
+            assertEquals(4, list.first());
+            assertEquals(4, list.get(0));
+            assertEquals(5, list.get(1));
+            assertEquals(6, list.last());
+            assertEquals(6, list.get(2));
+        }
+    }
+
+    @DisplayName("On an unsorted node list")
+    @Nested
+    class UnsortedNodeListTest {
+        @DisplayName("sorting two elements sorts them")
+        @Test
+        void sortingTwoElementsSortsThem() {
+            DoublyLinkedListDeque<Integer> list = createQueueOf(4, 0, 5);
+            list.sort(Integer::compareTo);
+            assertEquals(0, list.first());
+            assertEquals(0, list.get(0));
+            assertEquals(4, list.get(1));
+            assertEquals(5, list.last());
+            assertEquals(5, list.get(2));
+        }
+
+        @DisplayName("sorting three elements  sorts them")
+        @Test
+        void sortingThreeElementsSortsThem() {
+            DoublyLinkedListDeque<Integer> list = createQueueOf( 5, 6, 4);
+            list.sort(Integer::compareTo);
+            assertEquals(4, list.first());
+            assertEquals(4, list.get(0));
+            assertEquals(5, list.get(1));
+            assertEquals(6, list.last());
+            assertEquals(6, list.get(2));
+        }
+
+        @DisplayName("sorting three elements sorts them")
+        @Test
+        void sortingThreeElementsWithNullSortsThem() {
+            DoublyLinkedListDeque<Integer> list = createQueueOf( 5, null, 4);
+            list.sort(Integer::compareTo);
+            assertEquals(null, list.first());
+            assertEquals(null, list.get(0));
+            assertEquals(4, list.get(1));
+            assertEquals(5, list.last());
+            assertEquals(5, list.get(2));
         }
     }
 }
