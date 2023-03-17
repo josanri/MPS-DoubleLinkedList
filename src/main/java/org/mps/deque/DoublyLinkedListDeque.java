@@ -1,5 +1,8 @@
 package org.mps.deque;
 
+import java.util.Comparator;
+import java.util.Objects;
+
 /**
  * The class contains methods a double linked list
  * @author Alba Ruiz Gutiérrez
@@ -79,4 +82,91 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
         return this.size;
     }
 
+    public T get(int index) {
+        if (size <= index || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        DequeNode<T> iteratorNode = first;
+        for (int i = 0; i < index; i++) {
+            iteratorNode = iteratorNode.getNext();
+        }
+        return (iteratorNode.getItem());
+    }
+
+    public boolean contains(T value) {
+        DequeNode<T> iteratorNode = first;
+        boolean found = false;
+        while (iteratorNode != null && !found) {
+            found = Objects.equals(iteratorNode.getItem(), value);
+            iteratorNode = iteratorNode.getNext();
+        }
+        return (found);
+    }
+
+    public void remove(T value) {
+        if(size == 0){
+            throw new DoubleEndedQueueException("Can't remove from an empty deque");
+        }
+        DequeNode<T> iteratorNode = first;
+        boolean found = false;
+        while (iteratorNode != null && !found) {
+            found = Objects.equals(iteratorNode.getItem(), value);
+            if (!found)
+                iteratorNode = iteratorNode.getNext();
+        }
+        if (found) {
+            if (iteratorNode != first)
+                iteratorNode.getPrevious().setPrevious(iteratorNode.getNext());
+            if (iteratorNode != last)
+                iteratorNode.getNext().setPrevious(iteratorNode.getPrevious());
+            if (iteratorNode == first)
+                first = iteratorNode.getNext();
+            if (iteratorNode == last)
+                last = iteratorNode.getPrevious();
+            size--;
+        }
+    }
+
+    public void sort(Comparator<? super T> comparator){
+        while (!isSorted(comparator)) {
+            DequeNode<T> iteratorNode = first;
+            while (iteratorNode != null) {
+                if (iteratorNode.getNext() != null
+                        && !isSortedNodes(iteratorNode, iteratorNode.getNext(), comparator))
+                    swapNodesValues(iteratorNode, iteratorNode.getNext());
+                iteratorNode = iteratorNode.getNext();
+
+            }
+        }
+    }
+
+    private boolean isSortedNodes(DequeNode<T> iteratorNode, DequeNode<T> next, Comparator<? super T> comparator) {
+        if (iteratorNode.getItem() == null)
+            return (true);
+        else if (next.getItem() == null)
+            return (false);
+        else
+            return (comparator.compare(iteratorNode.getItem(),
+                next.getItem()) <= 0);
+
+    }
+
+    private void swapNodesValues(DequeNode<T> first, DequeNode<T> next) {
+        T aux = first.getItem();
+        first.setItem(next.getItem());
+        next.setItem(aux);
+    }
+
+    private boolean isSorted(Comparator<? super T> comparator) {
+        if (size <= 1)
+            return  true;
+        DequeNode<T> iteratorNode = first.getNext();
+        while (iteratorNode != null) {
+            if (!isSortedNodes(iteratorNode.getPrevious(), iteratorNode, comparator)) {
+                return (false);
+            }
+            iteratorNode = iteratorNode.getNext();
+        }
+        return  (true);
+    }
 }
