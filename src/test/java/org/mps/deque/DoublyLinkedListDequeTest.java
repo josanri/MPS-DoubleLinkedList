@@ -7,35 +7,50 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The class contains methods for testing linked list in three different cases:
- * <h3>Empty list</h3>
+ The class contains methods for testing linked list in three different cases:
+ *<h3>Empty list</h3>
  * - has size zero
  * - adding one at the beginning means size 1 and node is first
  * - adding one at the end means size 1 and node is last
  * - deleting throws exception
  * - getting first or last item throws exception
  * - sorting has no effect and does not throw an exception
- * <h3>One node list</h3>
- * - has size zero
+ * - asking if it contains a value or a null returns false
+ * - remove should throw an exception
+ * - sorting does not throw and exception
+ *<h3>One node list</h3>
+ * - has size one
  * - first and last element is the same as size is equals to 1
  * - can delete once, but not twice
  * - prepend an element increments the size by one and puts it as first
  * - append an element increments the size by one and puts it as last
  * - sorting has no effect and does not throw an exception
- * <h3>Two node list</h3>
+ * - asking if it contains a value that is contained returns true
+ * - try to get an element with index less than zero or greater or equal to the size should throw an exception
+ * - try to get an element with a valid index should return the element
+ * - asking if it contains a value that is contained returns true
+ * - asking if it contains a null returns false
+ * - remove should result on an empty deque
+ *<h3>Two node list</h3>
  * - has size two
  * - can delete twice, but no more
  * - can delete once and keep consistency
  * - prepend an element increments the size by one and puts it as first
  * - append an element increments the size by one and puts it as last
- * <h3>Null node item list</h3>
+ * - try to get an element with index less than zero or greater or equal to the size should throw an exception
+ * - try to get an element with a valid index should return the element
+ * - asking if it contains a value that is contained returns true
+ * - asking if it contains a null returns false
+ * - remove first ocurrency of an element should remove it first ocurrence only, even if it is repeated
+ * - remove an element that doesn't exist should do nothing
+ *<h3>Null node item list</h3>
  * - contains null and does nos throw an exception
  * - does not contain any other value than null
- * <h3>Sorted lists</h3>
+ *<h3>Sorted lists</h3>
  *  - sorting has no effect
- *  <h3>Unsorted lists</h3>
+ *<h3>Unsorted lists</h3>
  *  - sorting on different kinds of list sorts the list
- * <br/>
+ *<br/>
  * On every kind of list it is tested the size, insertions and deletions
  * checking if the consistency is kept between nodes.
  * @author Alba Ruiz Gutiérrez
@@ -357,7 +372,7 @@ class DoublyLinkedListDequeTest {
             assertFalse(doubleNodeDoubleLinkedList.contains(null));
         }
 
-        @DisplayName("remove first ocurrency of an element with two occurencys sholud left the second element and remove the first one")
+        @DisplayName("remove first occurrence of an element with two occurencys sholud left the second element and remove the first one")
         @Test
         void removeOneOutOfTwoFromDoubleDeque(){
             doubleNodeDoubleLinkedList.append(5);
@@ -367,7 +382,7 @@ class DoublyLinkedListDequeTest {
             assertEquals(5, doubleNodeDoubleLinkedList.last());
         }
 
-        @DisplayName("remove an element with one occurency sholud left the second element and remove the first one")
+        @DisplayName("remove an element with one occurrence should left the second element and remove the first one")
         @Test
         void removeFromDoubleDeque(){
             doubleNodeDoubleLinkedList.remove(6);
@@ -376,7 +391,7 @@ class DoublyLinkedListDequeTest {
             assertEquals(5, doubleNodeDoubleLinkedList.last());
         }
 
-        @DisplayName("remove an element that doesn't exist shoul do nothing")
+        @DisplayName("remove an element that doesn't exist should do nothing")
         @Test
         void removeAnElementThatIsNotInADoubleDeque(){
             doubleNodeDoubleLinkedList.remove(2);
