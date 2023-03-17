@@ -357,7 +357,7 @@ class DoublyLinkedListDequeTest {
             assertFalse(doubleNodeDoubleLinkedList.contains(null));
         }
 
-        @DisplayName("removeFirstOcurrencyOfAnElementWithTwoOccurencys")
+        @DisplayName("remove first ocurrency of an element with two occurencys sholud left the second element and remove the first one")
         @Test
         void removeFromDoubleDeque(){
             doubleNodeDoubleLinkedList.append(5);
