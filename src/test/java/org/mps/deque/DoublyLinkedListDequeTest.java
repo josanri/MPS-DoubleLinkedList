@@ -335,6 +335,16 @@ class DoublyLinkedListDequeTest {
         void containsNullReturnsNull() {
             assertFalse(doubleNodeDoubleLinkedList.contains(null));
         }
+
+        @DisplayName("removeFirstOcurrencyOfAnElementWithTwoOccurencys")
+        @Test
+        void removeFromDoubleDeque(){
+            doubleNodeDoubleLinkedList.append(5);
+            doubleNodeDoubleLinkedList.remove(5);
+            assertEquals(2,doubleNodeDoubleLinkedList.size());
+            assertEquals(6, doubleNodeDoubleLinkedList.first());
+            assertEquals(5, doubleNodeDoubleLinkedList.last());
+        }
     }
     @Nested
     @DisplayName("On list with a null item")
@@ -360,5 +370,7 @@ class DoublyLinkedListDequeTest {
             assertDoesNotThrow(() -> nullItemDoubleLinkedList.contains(5));
             assertFalse(nullItemDoubleLinkedList.contains(5));
         }
+
+
     }
 }
