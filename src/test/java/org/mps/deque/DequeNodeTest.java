@@ -158,13 +158,11 @@ class DequeNodeTest {
         @Test
         @DisplayName("setting the previous of the last node to null removes the previous node")
         void thirdNodeChangesPreviousWhenSet () {
-
             DequeNode <Integer> node_one = new DequeNode<>(0, null, null);
             DequeNode <Integer> node_two = new DequeNode<>(1, node_one, null);
             DequeNode <Integer> node_three = new DequeNode<>(2, node_two, null);
             node_one.setNext(node_two);
             node_two.setNext(node_three);
-
             node_three.setPrevious(null);
 
             DequeNode<Integer> actualValue = null;
