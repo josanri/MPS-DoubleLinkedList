@@ -359,11 +359,20 @@ class DoublyLinkedListDequeTest {
 
         @DisplayName("remove first ocurrency of an element with two occurencys sholud left the second element and remove the first one")
         @Test
-        void removeFromDoubleDeque(){
+        void removeOneOutOfTwoFromDoubleDeque(){
             doubleNodeDoubleLinkedList.append(5);
             doubleNodeDoubleLinkedList.remove(5);
             assertEquals(2,doubleNodeDoubleLinkedList.size());
             assertEquals(6, doubleNodeDoubleLinkedList.first());
+            assertEquals(5, doubleNodeDoubleLinkedList.last());
+        }
+
+        @DisplayName("remove an element with one occurency sholud left the second element and remove the first one")
+        @Test
+        void removeFromDoubleDeque(){
+            doubleNodeDoubleLinkedList.remove(6);
+            assertEquals(1,doubleNodeDoubleLinkedList.size());
+            assertEquals(5, doubleNodeDoubleLinkedList.first());
             assertEquals(5, doubleNodeDoubleLinkedList.last());
         }
     }
