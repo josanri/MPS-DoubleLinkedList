@@ -375,6 +375,15 @@ class DoublyLinkedListDequeTest {
             assertEquals(5, doubleNodeDoubleLinkedList.first());
             assertEquals(5, doubleNodeDoubleLinkedList.last());
         }
+
+        @DisplayName("remove an element that doesn't exist shoul do nothing")
+        @Test
+        void removeAnElementThatIsNotInADoubleDeque(){
+            doubleNodeDoubleLinkedList.remove(2);
+            assertEquals(2,doubleNodeDoubleLinkedList.size());
+            assertEquals(5, doubleNodeDoubleLinkedList.first());
+            assertEquals(6, doubleNodeDoubleLinkedList.last());
+        }
     }
     @Nested
     @DisplayName("On list with a null item")
