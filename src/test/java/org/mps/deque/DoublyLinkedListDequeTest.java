@@ -3,6 +3,7 @@ package org.mps.deque;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * - adding one at the beginning means size 1 and node is first
  * - adding one at the end means size 1 and node is last
  * - deleting throws exception
- * - getting first or last item throws exception
+ * - getting first or last item throws an exception
  * - sorting has no effect and does not throw an exception
  * - asking if it contains a value or a null returns false
  * - remove should throw an exception
@@ -79,42 +80,81 @@ class DoublyLinkedListDequeTest {
         void hasSizeZero() {
             int expectedValue = 0;
             int actualValue = emptyDoubleLinkedList.size();
+
             assertEquals(expectedValue, actualValue);
         }
 
-        @DisplayName("adding an element to the front should increase size by one and change first element")
+        @DisplayName("adding an element to the front should increase size by one")
         @Test
-        void addFirst() {
+        void addFirstIncreasesSizeByOne() {
             emptyDoubleLinkedList.prepend(1);
-            assertEquals(1, emptyDoubleLinkedList.size());
-            assertEquals(1, emptyDoubleLinkedList.first());
+
+            int expectedValue = 1;
+            int actualValue = emptyDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+
+        @DisplayName("adding an element to the front should change it as first element")
+        @Test
+        void addFirstIncreasesMakesItTheFirst() {
+            emptyDoubleLinkedList.prepend(1);
+
+            int expectedValue = 1;
+            int actualValue = emptyDoubleLinkedList.first();
+
+            assertEquals(expectedValue, actualValue);
+        }
+        @DisplayName("adding an element to the back should increase size and change last element")
+        @Test
+        void addLastIncreasesSizeByOne() {
+            emptyDoubleLinkedList.append(1);
+
+            int expectedValue = 1;
+            int actualValue = emptyDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
         }
 
         @DisplayName("adding an element to the back should increase size and change last element")
         @Test
-        void addLast() {
+        void addLastSetsItAsLast() {
             emptyDoubleLinkedList.append(1);
-            assertEquals(1, emptyDoubleLinkedList.size());
-            assertEquals(1, emptyDoubleLinkedList.last());
+
+            int expectedValue = 1;
+            int actualValue = emptyDoubleLinkedList.last();
+
+            assertEquals(expectedValue, actualValue);
         }
 
         @DisplayName("deleting should throw an exception")
         @Test
-        void deleteFromEmptyDeque() {
+        void deleteFirstFromEmptyDequeThrowAnException() {
             assertThrows(DoubleEndedQueueException.class, () -> emptyDoubleLinkedList.deleteFirst());
+        }
+
+        @DisplayName("deleting last should throw an exception")
+        @Test
+        void deleteLastFromEmptyDequeThrowAnException() {
             assertThrows(DoubleEndedQueueException.class, () -> emptyDoubleLinkedList.deleteLast());
         }
 
         @DisplayName("try to access to an element should throw an exception")
         @Test
-        void firstOfEmptyDeque() {
+        void firstOfEmptyDequeThrowsAnException() {
             assertThrows(DoubleEndedQueueException.class, () -> emptyDoubleLinkedList.first());
+        }
+
+        @DisplayName("try to access to an element should throw an exception")
+        @Test
+        void lastOfEmptyDequeThrowsAnException() {
             assertThrows(DoubleEndedQueueException.class, () -> emptyDoubleLinkedList.last());
         }
 
         @DisplayName("getting any element should throw an exception")
         @Test
-        void getOnEmptyDeque(){
+        void getOnEmptyDequeThrowsAnException(){
             assertThrows(IndexOutOfBoundsException.class, () -> emptyDoubleLinkedList.get(1));
         }
 
@@ -122,18 +162,24 @@ class DoublyLinkedListDequeTest {
         @DisplayName("asking if it contains a value returns false")
         @Test
         void containsReturnsNull() {
-            assertFalse(emptyDoubleLinkedList.contains(5));
+            boolean expectedValue = false;
+            boolean actualValue = emptyDoubleLinkedList.contains(5);
+
+            assertEquals(expectedValue, actualValue);
         }
 
         @DisplayName("asking if it contains a null returns false")
         @Test
         void containsNullReturnsNull() {
-            assertFalse(emptyDoubleLinkedList.contains(null));
+            boolean expectedValue = false;
+            boolean actualValue = emptyDoubleLinkedList.contains(null);
+
+            assertEquals(expectedValue, actualValue);
         }
 
         @DisplayName("remove should throw an exception")
         @Test
-        void removeOnEmptyDeque(){
+        void removeOnEmptyDequeThrowsAnException(){
             assertThrows(DoubleEndedQueueException.class, () -> emptyDoubleLinkedList.remove(1));
         }
 
@@ -165,45 +211,89 @@ class DoublyLinkedListDequeTest {
 
         @DisplayName("the first and last element should be the same")
         @Test
-        void singleElement() {
+        void firstEqualsLast() {
+            int expectedValue = 5;
 
-            assertEquals(1, singleNodeDoubleLinkedList.size());
-            assertEquals(5, singleNodeDoubleLinkedList.first());
-            assertEquals(5, singleNodeDoubleLinkedList.last());
+            assertEquals(expectedValue, singleNodeDoubleLinkedList.first());
+            assertEquals(expectedValue, singleNodeDoubleLinkedList.last());
+            assertTrue(Objects.equals(singleNodeDoubleLinkedList.first(), singleNodeDoubleLinkedList.last()));
         }
 
 
         @DisplayName("adding an element to the front should increase size by one and change first element")
         @Test
-        void addFirst() {
+        void addFirstIncreasesSizeByOne() {
             singleNodeDoubleLinkedList.prepend(1);
-            assertEquals(2, singleNodeDoubleLinkedList.size());
-            assertEquals(1, singleNodeDoubleLinkedList.first());
+
+            int expectedValue = 2;
+            int actualValue = singleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+        @DisplayName("adding an element to the front should change it as the first element")
+        @Test
+        void addFirstSetsItemAsFirst() {
+            singleNodeDoubleLinkedList.prepend(1);
+
+            int expectedValue = 1;
+            int actualValue = singleNodeDoubleLinkedList.first();
+
+            assertEquals(expectedValue, actualValue);
         }
 
 
-        @DisplayName("adding an element to the back should increase size and change last element")
+        @DisplayName("adding an element to the back should increase size by on")
         @Test
-        void addLast() {
+        void addLastIncreasesSizeByOne() {
             singleNodeDoubleLinkedList.append(1);
-            assertEquals(2, singleNodeDoubleLinkedList.size());
-            assertEquals(1, singleNodeDoubleLinkedList.last());
+
+            int expectedValue = 2;
+            int actualValue = singleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+        @DisplayName("adding an element to the back should change last element")
+        @Test
+        void addLastChangesLastElement() {
+            singleNodeDoubleLinkedList.append(1);
+
+            int expectedValue = 1;
+            int actualValue = singleNodeDoubleLinkedList.last();
+
+            assertEquals(expectedValue, actualValue);
         }
 
         @DisplayName("deleting the first element should result in an empty deque")
         @Test
-        void deleteFirstFromSingleNodeThrowsAnException(){
+        void deleteFirstFromSingleNodeDecreasesItsSize(){
             singleNodeDoubleLinkedList.deleteFirst();
-            assertEquals(0, singleNodeDoubleLinkedList.size());
-            assertThrows(DoubleEndedQueueException.class, singleNodeDoubleLinkedList::first);
 
+            int expectedSize = 0;
+            int actualSize = singleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedSize, actualSize);
+            assertThrows(DoubleEndedQueueException.class, singleNodeDoubleLinkedList::first);
+        }
+
+        @DisplayName("deleting the first element and accessing it throws an exception")
+        @Test
+        void deleteFirstTwiceFromSingleNodeThrowsAnException(){
+            singleNodeDoubleLinkedList.deleteFirst();
+
+            assertThrows(DoubleEndedQueueException.class, singleNodeDoubleLinkedList::first);
         }
 
         @DisplayName("deleting the first element should result in an empty deque")
         @Test
         void deleteLastFromSingleNodeResultsInAnEmptyList(){
             singleNodeDoubleLinkedList.deleteLast();
-            assertEquals(0, singleNodeDoubleLinkedList.size());
+
+            int expectedSize = 0;
+            int actualSize = singleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedSize, actualSize);
             assertThrows(DoubleEndedQueueException.class, singleNodeDoubleLinkedList::last);
         }
 
@@ -213,30 +303,33 @@ class DoublyLinkedListDequeTest {
             assertTrue(singleNodeDoubleLinkedList.contains(5));
         }
 
-        @DisplayName("try to get an element with index less than zero should throw an exception")
+        @DisplayName("try to get an element with index less than zero should throw an index out of bound exception")
         @Test
-        void getValueWithNegativeIndexOnSingleDeque(){
+        void getValueWithNegativeIndexOnSingleDequeThrowsIndexOutOfBoundsException(){
             assertThrows(IndexOutOfBoundsException.class, () -> singleNodeDoubleLinkedList.get(-1));
         }
 
         @DisplayName("try to get an element with index equals to size should throw an exception")
         @Test
-        void getValueWithIndexEqualsToSizeOnSingleDeque(){
+        void getValueWithIndexEqualsToSizeOnSingleDequeThrowsIndexOutOfBoundsException(){
             assertThrows(IndexOutOfBoundsException.class, () -> singleNodeDoubleLinkedList.get(1));
         }
 
         @DisplayName("try to get an element with index bigger than size should throw an exception")
         @Test
-        void getValueWithIndexOutOfSizeOnSingleDeque(){
+        void getValueWithIndexOutOfSizeOnSingleDequeThrowsIndexOutOfBoundsException(){
             assertThrows(IndexOutOfBoundsException.class, () -> singleNodeDoubleLinkedList.get(2));
         }
 
         @DisplayName("try to get an element with a valid index should return the element")
         @Test
         void getValueWithValidIndexOnSingleDeque(){
-            assertEquals(5,singleNodeDoubleLinkedList.get(0));
+            int expectedValue = 5;
+            int actualValue = singleNodeDoubleLinkedList.get(0);
+
+            assertEquals(expectedValue,actualValue);
         }
-        @DisplayName("asking if it contains a value that is contained returns true")
+        @DisplayName("asking if it contains a value that it does not contain returns false")
         @Test
         void containsReturnsTrueWhenAskingIfItContainsAValueThatTheListDoesNotHave() {
             assertFalse(singleNodeDoubleLinkedList.contains(1));
@@ -252,7 +345,11 @@ class DoublyLinkedListDequeTest {
         @Test
         void removeOnSingleDeque(){
             singleNodeDoubleLinkedList.remove(5);
-            assertEquals(0,singleNodeDoubleLinkedList.size());
+
+            int expectedSize = 0;
+            int actualSize = singleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedSize, actualSize);
         }
     }
 
@@ -276,12 +373,26 @@ class DoublyLinkedListDequeTest {
         }
 
 
-        @DisplayName("adding an element to the front should increase size by one and change first element")
+        @DisplayName("adding an element to the front should increase size by one")
         @Test
         void addFirstIncreaseSizeByOne() {
             doubleNodeDoubleLinkedList.prepend(1);
-            assertEquals(3, doubleNodeDoubleLinkedList.size());
-            assertEquals(1, doubleNodeDoubleLinkedList.first());
+
+            int expectedValue = 3;
+            int actualValue = doubleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+        @DisplayName("adding an element to the front should change first element")
+        @Test
+        void addFirstIncreaseChangesTheFirstElement() {
+            doubleNodeDoubleLinkedList.prepend(1);
+
+            int expectedValue = 1;
+            int actualValue = doubleNodeDoubleLinkedList.first();
+
+            assertEquals(expectedValue, actualValue);
         }
 
 
@@ -289,25 +400,53 @@ class DoublyLinkedListDequeTest {
         @Test
         void addLastIncreaseSizeByOne() {
             doubleNodeDoubleLinkedList.append(1);
-            assertEquals(3, doubleNodeDoubleLinkedList.size());
-            assertEquals(1, doubleNodeDoubleLinkedList.last());
+
+            int expectedValue = 3;
+            int actualValue = doubleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+
+        @DisplayName("adding an element to the back should increase size and change last element")
+        @Test
+        void addLastChangesLastElement() {
+            doubleNodeDoubleLinkedList.append(1);
+
+            int expectedValue = 1;
+            int actualValue = doubleNodeDoubleLinkedList.last();
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+        @Test
+        @DisplayName("deleting the first element should result decrease its size by one")
+        void deleteFirstFromDecreasesTheSizeByOne() {
+            doubleNodeDoubleLinkedList.deleteFirst();
+
+            int expectedValue = 1;
+            int actualValue = doubleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
         }
 
         @Test
         @DisplayName("deleting the first element should result in a single deque")
         void deleteFirstFromDoubleNodeResultsInASingleNodeList() {
             doubleNodeDoubleLinkedList.deleteFirst();
-            assertEquals(1, doubleNodeDoubleLinkedList.size());
-            assertEquals(6, doubleNodeDoubleLinkedList.first());
-            assertEquals(6, doubleNodeDoubleLinkedList.last());
 
+            int expectedValue = 6;
 
+            assertEquals(expectedValue, doubleNodeDoubleLinkedList.first());
+            assertEquals(expectedValue, doubleNodeDoubleLinkedList.last());
+            assertTrue(Objects.equals(doubleNodeDoubleLinkedList.first(), doubleNodeDoubleLinkedList.last()));
         }
 
         @Test
         @DisplayName("deleting the last element should result in a single deque")
         void deleteLastFromDoubleNodeResultsInASingleNodeList() {
             doubleNodeDoubleLinkedList.deleteLast();
+
             assertEquals(1, doubleNodeDoubleLinkedList.size());
             assertEquals(5, doubleNodeDoubleLinkedList.first());
             assertEquals(5, doubleNodeDoubleLinkedList.last());
@@ -318,6 +457,7 @@ class DoublyLinkedListDequeTest {
         void deleteFirstAndLastResultsInEmptyDeque() {
             doubleNodeDoubleLinkedList.deleteFirst();
             doubleNodeDoubleLinkedList.deleteLast();
+
             assertEquals(0, doubleNodeDoubleLinkedList.size());
             assertThrows(DoubleEndedQueueException.class, doubleNodeDoubleLinkedList::first);
             assertThrows(DoubleEndedQueueException.class, doubleNodeDoubleLinkedList::last);
@@ -341,11 +481,22 @@ class DoublyLinkedListDequeTest {
             assertThrows(IndexOutOfBoundsException.class, () -> doubleNodeDoubleLinkedList.get(3));
         }
 
-        @DisplayName("try to get an element with a valid index should return the element")
+        @DisplayName("try to get element at index zero returns the first element")
+        @Test
+        void gettingIndexZeroReturnsFirst(){
+            int expectedValue = 5;
+            int actualValue = doubleNodeDoubleLinkedList.get(0);
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+        @DisplayName("try to get element at index one returns the last element")
         @Test
         void getValueWithValidIndexOnSingleDeque(){
-            assertEquals(5,doubleNodeDoubleLinkedList.get(0));
-            assertEquals(6,doubleNodeDoubleLinkedList.get(1));
+            int expectedValue = 6;
+            int actualValue = doubleNodeDoubleLinkedList.get(1);
+
+            assertEquals(expectedValue, actualValue);
         }
 
         @DisplayName("asking if it contains a value that is contained returns true")
@@ -368,34 +519,71 @@ class DoublyLinkedListDequeTest {
 
         @DisplayName("asking if it contains a null returns false")
         @Test
-        void containsNullReturnsNull() {
+        void containsNullReturnsFalse() {
             assertFalse(doubleNodeDoubleLinkedList.contains(null));
         }
 
-        @DisplayName("remove first occurrence of an element with two occurencys sholud left the second element and remove the first one")
+        @DisplayName("remove first occurrence of an element with two occurrences should left the second element and remove the first one")
         @Test
-        void removeOneOutOfTwoFromDoubleDeque(){
+        void removeFromDoubleDequeWithTwoOccurrences(){
             doubleNodeDoubleLinkedList.append(5);
             doubleNodeDoubleLinkedList.remove(5);
-            assertEquals(2,doubleNodeDoubleLinkedList.size());
+
             assertEquals(6, doubleNodeDoubleLinkedList.first());
             assertEquals(5, doubleNodeDoubleLinkedList.last());
         }
 
-        @DisplayName("remove an element with one occurrence should left the second element and remove the first one")
+        @DisplayName("remove first occurrence of an element with two occurrences should decrease the size by one")
         @Test
-        void removeFromDoubleDeque(){
-            doubleNodeDoubleLinkedList.remove(6);
-            assertEquals(1,doubleNodeDoubleLinkedList.size());
-            assertEquals(5, doubleNodeDoubleLinkedList.first());
-            assertEquals(5, doubleNodeDoubleLinkedList.last());
+        void removeFromDoubleDequeWithTwoOccurrencesDecreasesTheSizeByOne(){
+            doubleNodeDoubleLinkedList.append(5);
+            doubleNodeDoubleLinkedList.remove(5);
+
+            int expectedValue = 2;
+            int actualValue = doubleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
         }
 
-        @DisplayName("remove an element that doesn't exist should do nothing")
+        @DisplayName("remove an element with one occurrence should left the second element and remove the first one")
         @Test
-        void removeAnElementThatIsNotInADoubleDeque(){
+        void removeFromDoubleDequeWithOneOccurrenceRemovesOnlyThisOccurrence(){
+            doubleNodeDoubleLinkedList.remove(6);
+
+            int expectedValue = 5;
+
+            assertEquals(expectedValue, doubleNodeDoubleLinkedList.first());
+            assertEquals(expectedValue, doubleNodeDoubleLinkedList.last());
+            assertTrue(Objects.equals(doubleNodeDoubleLinkedList.first(), doubleNodeDoubleLinkedList.last()));
+        }
+
+        @DisplayName("remove an element with one occurrence should left the second element and remove the first one")
+        @Test
+        void removeFromDoubleDequeWithOneOccurrenceDecreasesTheSizeByOne(){
+            doubleNodeDoubleLinkedList.remove(6);
+
+            int expectedValue = 1;
+            int actualValue = doubleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+        @DisplayName("remove an element that doesn't modify size")
+        @Test
+        void removingAnElementThatIsNotInADoubleDequeDoesNotModifyTheSize(){
             doubleNodeDoubleLinkedList.remove(2);
-            assertEquals(2,doubleNodeDoubleLinkedList.size());
+
+            int expectedValue = 2;
+            int actualValue = doubleNodeDoubleLinkedList.size();
+
+            assertEquals(expectedValue, actualValue);
+        }
+
+        @DisplayName("remove an element that doesn't exist should not change first and last")
+        @Test
+        void removingAnElementThatIsNotInADoubleDequeDoesNotModifyTheList(){
+            doubleNodeDoubleLinkedList.remove(2);
+
             assertEquals(5, doubleNodeDoubleLinkedList.first());
             assertEquals(6, doubleNodeDoubleLinkedList.last());
         }
@@ -418,14 +606,12 @@ class DoublyLinkedListDequeTest {
             assertTrue(nullItemDoubleLinkedList.contains(null));
         }
 
-        @DisplayName("asking if it contains a value different value returns false")
+        @DisplayName("asking if it contains a value different that it has returns false")
         @Test
         void containsReturnsFalseWhenAskingIfItContainsAValueDistinctFromNull() {
             assertDoesNotThrow(() -> nullItemDoubleLinkedList.contains(5));
             assertFalse(nullItemDoubleLinkedList.contains(5));
         }
-
-
     }
 
     @DisplayName("On a sorted node list")
@@ -435,7 +621,9 @@ class DoublyLinkedListDequeTest {
         @Test
         void sortingTwoElementsDoesNotModifyTheList() {
             DoublyLinkedListDeque<Integer> list = createQueueOf(4, 5);
+
             list.sort(Integer::compareTo);
+
             assertEquals(4, list.first());
             assertEquals(4, list.get(0));
             assertEquals(5, list.last());
@@ -446,7 +634,9 @@ class DoublyLinkedListDequeTest {
         @Test
         void sortingThreeElementsDoesNotModifyTheList() {
             DoublyLinkedListDeque<Integer> list = createQueueOf(4, 5, 6);
+
             list.sort(Integer::compareTo);
+
             assertEquals(4, list.first());
             assertEquals(4, list.get(0));
             assertEquals(5, list.get(1));
@@ -458,11 +648,13 @@ class DoublyLinkedListDequeTest {
     @DisplayName("On an unsorted node list")
     @Nested
     class UnsortedNodeListTest {
-        @DisplayName("sorting two elements sorts them")
+        @DisplayName("sorting three elements 4 0 5 sorts them as 0 4 5")
         @Test
         void sortingTwoElementsSortsThem() {
             DoublyLinkedListDeque<Integer> list = createQueueOf(4, 0, 5);
+
             list.sort(Integer::compareTo);
+
             assertEquals(0, list.first());
             assertEquals(0, list.get(0));
             assertEquals(4, list.get(1));
@@ -470,11 +662,13 @@ class DoublyLinkedListDequeTest {
             assertEquals(5, list.get(2));
         }
 
-        @DisplayName("sorting three elements  sorts them")
+        @DisplayName("sorting three elements 5 6 4 sorts them as 4 5 6")
         @Test
         void sortingThreeElementsSortsThem() {
             DoublyLinkedListDeque<Integer> list = createQueueOf( 5, 6, 4);
+
             list.sort(Integer::compareTo);
+
             assertEquals(4, list.first());
             assertEquals(4, list.get(0));
             assertEquals(5, list.get(1));
@@ -482,11 +676,13 @@ class DoublyLinkedListDequeTest {
             assertEquals(6, list.get(2));
         }
 
-        @DisplayName("sorting three elements sorts them")
+        @DisplayName("sorting three 5 null 4 elements sorts them as null 4 5")
         @Test
         void sortingThreeElementsWithNullSortsThem() {
             DoublyLinkedListDeque<Integer> list = createQueueOf( 5, null, 4);
+
             list.sort(Integer::compareTo);
+
             assertEquals(null, list.first());
             assertEquals(null, list.get(0));
             assertEquals(4, list.get(1));
@@ -494,11 +690,13 @@ class DoublyLinkedListDequeTest {
             assertEquals(5, list.get(2));
         }
 
-        @DisplayName("sorting three elements with two nulls sorts them")
+        @DisplayName("sorting three elements null, 4, null sorts them as null, null, 4")
         @Test
         void sortingTwoNullsAndOneElementsWithNullSortsThem() {
-            DoublyLinkedListDeque<Integer> list = createQueueOf( null, null, 4);
+            DoublyLinkedListDeque<Integer> list = createQueueOf( null, 4, null);
+
             list.sort(Integer::compareTo);
+
             assertEquals(null, list.first());
             assertEquals(null, list.get(0));
             assertEquals(null, list.get(1));
