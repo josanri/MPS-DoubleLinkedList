@@ -109,11 +109,10 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
         }
         DequeNode<T> iteratorNode = first;
         boolean found = false;
-        while (iteratorNode != null) {
+        while (iteratorNode != null && !found) {
             found = Objects.equals(iteratorNode.getItem(), value);
-            if (found)
-                break;
-            iteratorNode = iteratorNode.getNext();
+            if (!found)
+                iteratorNode = iteratorNode.getNext();
         }
         if (found) {
             if (iteratorNode != first)
